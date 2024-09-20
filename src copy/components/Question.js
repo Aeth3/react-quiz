@@ -2,17 +2,23 @@ import Options from "./Options";
 import Button from "./Button";
 import Timer from "./Timer";
 import Footer from "./Footer";
-import { useQuizzes } from "../hooks/useQuiz";
 
-export default function Question() {
-  const { questions, index, dispatch, answer, points } = useQuizzes();
-  const currentQuestion = questions[index];
-  const { question, options, correctOption } = currentQuestion;
+export default function Question({
+  currentQuestion,
+  dispatch,
+  answer,
+  currentPoints,
+  numQuestions,
+  index,
+  secondsRemaining,
+  
+}) {
+  const { question, options, id, correctOption, points } = currentQuestion;
   const hasAnswered = answer !== null;
 
   return (
     <div>
-      <h4>Score: {points}</h4>
+      <h4>Score: {currentPoints}</h4>
       <h4>{question}</h4>
       {options.map((option, i) => (
         <Options key={i}>
@@ -33,10 +39,14 @@ export default function Question() {
         </Options>
       ))}
       <Footer>
-        <Timer />
+        <Timer secondsRemaining={secondsRemaining} dispatch={dispatch} />
         {hasAnswered && (
-          <Button className={"btn btn-ui"} type={{ type: "next" }}>
-            {index === questions.length - 1 ? "Finish" : "Next"}
+          <Button
+            className={"btn btn-ui"}
+            dispatch={dispatch}
+            type={{ type: "next" }}
+          >
+            {index === numQuestions - 1 ? "Finish" : "Next"}
           </Button>
         )}
       </Footer>

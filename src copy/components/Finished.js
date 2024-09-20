@@ -1,7 +1,9 @@
-import { useQuizzes } from "../hooks/useQuiz";
-
-export default function Finished() {
-  const { points, maxPossiblePoints, highscore, dispatch } = useQuizzes();
+export default function Finished({
+  points,
+  maxPossiblePoints,
+  highscore,
+  dispatch,
+}) {
   const percentage = (points / maxPossiblePoints) * 100;
   let emoji;
   if (percentage === 100) emoji = "🎖️";
